@@ -1,0 +1,51 @@
+const http = require('http')
+const mysql = require('mysql')
+const querystring = require('querystring')
+
+http.createServer((req, res) => {
+    let postVal = ''
+
+    req.on('data', (chuck) => {
+        postVal += chuck
+    })
+
+    req.on('end', () => {
+        let formVal = querystring.parse(postVal)
+        let userName = formVal.userName
+        let userPwd = formVal.userPwd
+
+        const connection = mysql.createConnection({
+            host: 'localhost',
+            port: 3306,
+            user: 'root',
+            password: '123456',
+            database: 'node_study'
+        })
+
+        connection.connect()
+
+        connection.query('select * from user where userName = ? and userPwd = ?', [userName, userPwd], (err, results, fields) => {
+            if (err) throw err
+
+            if (results.length > 0) {
+                res.writeHead(200, {
+                    'Content-Type': 'text/html;charset=utf-8'
+                })
+
+                res.write('登录成功')
+                res.end()
+            }
+
+            res.writeHead(400, {
+                'Content-Type': 'text/html;charset=utf-8'
+            })
+
+            res.write('用户密码错误')
+            res.end()
+
+        })
+
+        connection.end()
+
+    })
+}).listen(8080)
