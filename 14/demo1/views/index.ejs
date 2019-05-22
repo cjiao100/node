@@ -7,5 +7,16 @@
   <body>
     <h1><%= title %></h1>
     <p>Welcome to <%= title %></p>
+
+    <p><%= msg %></p>
+
+    <ul>
+      <% arr.forEach(element => {%>
+        <li><%= element %></li>
+      <% }); %>
+      <li></li>
+    </ul>
+
+    <img src="/images/1.png" alt="">
   </body>
 </html>
