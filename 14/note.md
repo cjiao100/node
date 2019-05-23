@@ -7,6 +7,10 @@
     express app     == jaba
     express -e app == ejs
 
+## 启动项目
+    
+    DEBUG=app:* npm start
+
 ## 目录结构
 
     bin/www ===>   启动文件【入口文件】
